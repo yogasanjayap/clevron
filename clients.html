@@ -1,0 +1,435 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Klien - Clevron | Mitra Industri Pengolahan Air Limbah</title><meta name="description" content="Klien Clevron lintas industri: otomotif, F&B, tekstil, farmasi, paper mills, dan lainnya. Filter per sektor dan lihat produk yang digunakan."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"><style>
+:root{
+  --ink:#0A1A24;--deep:#0C3346;--deep-2:#0E435C;--blue:#2B7BBA;--aqua:#5BC2D6;
+  --orange:#F39200;--paper:#F5FAFB;--mist:#E6F1F4;--line:rgba(12,51,70,.12);--wa:#25D366;
+  --shadow:0 18px 50px -22px rgba(12,51,70,.45);--shadow-sm:0 8px 24px -14px rgba(12,51,70,.35);
+  --r:18px;--maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Sora',sans-serif;line-height:1.12;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.mono{font-family:'JetBrains Mono',monospace;letter-spacing:-.02em}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.74rem;font-weight:500;text-transform:uppercase;letter-spacing:.22em;color:var(--blue);display:inline-flex;align-items:center;gap:.6em}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--orange);display:inline-block}
+
+header{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 0;background:rgba(245,250,251,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line);transition:padding .3s ease}
+header.scrolled{padding:8px 0;box-shadow:0 6px 24px -16px rgba(12,51,70,.5)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center}
+.brand img{height:40px;width:auto}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a.nav-a{font-size:.92rem;font-weight:600;padding:9px 14px;border-radius:99px;color:var(--deep);transition:.2s;position:relative}
+.nav-links a.nav-a:hover{background:var(--mist)}
+.nav-links a.nav-a.active{color:var(--orange)}
+.nav-links a.nav-a.active::after{content:"";position:absolute;left:14px;right:14px;bottom:2px;height:2.5px;border-radius:2px;background:var(--orange)}
+.btn{display:inline-flex;align-items:center;gap:.5em;font-weight:700;font-size:.92rem;padding:12px 22px;border-radius:99px;border:0;cursor:pointer;transition:.25s;font-family:'Plus Jakarta Sans',sans-serif}
+.btn svg{width:16px;height:16px;flex:none}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 10px 24px -10px rgba(243,146,0,.7)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 30px -12px rgba(243,146,0,.8)}
+.btn-light{background:#fff;color:var(--deep);box-shadow:var(--shadow-sm)}
+.btn-light:hover{transform:translateY(-2px)}
+.btn-deep{background:var(--deep);color:#fff}
+.btn-deep:hover{transform:translateY(-2px);background:var(--deep-2)}
+.btn-outline{background:transparent;color:var(--deep);border:1.6px solid var(--line)}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+.btn-wa{background:var(--wa);color:#fff;box-shadow:0 10px 24px -10px rgba(37,211,102,.7)}
+.btn-wa:hover{transform:translateY(-2px);filter:brightness(1.04)}
+.hamburger{display:none;background:none;border:0;cursor:pointer;padding:8px;border-radius:10px}
+.hamburger span{display:block;width:24px;height:2.4px;background:var(--deep);border-radius:2px;transition:.3s}
+.hamburger span+span{margin-top:6px}
+.hamburger.open span:nth-child(1){transform:translateY(8.4px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-8.4px) rotate(-45deg)}
+.nav-overlay{position:fixed;inset:0;background:rgba(10,26,36,.4);opacity:0;visibility:hidden;transition:.3s;z-index:105}
+.nav-overlay.open{opacity:1;visibility:visible}
+
+.hero{position:relative;background:radial-gradient(120% 90% at 80% -10%, rgba(91,194,214,.30), transparent 55%),linear-gradient(165deg,#0B2E40 0%,#0C3346 45%,#0E435C 100%);color:#fff;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:-40% -10% auto;height:80%;pointer-events:none;background:radial-gradient(60% 50% at 50% 50%,rgba(91,194,214,.18),transparent 70%);animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translateX(-8%)}to{transform:translateX(10%) translateY(20px)}}
+/* carousel */
+.carousel{position:relative;overflow:hidden}
+.slides{display:flex;transition:transform .7s cubic-bezier(.4,.1,.2,1)}
+.slide{min-width:100%;flex:0 0 100%;padding:92px 0 58px}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+.hero h1{font-size:clamp(1.75rem,4.2vw,3rem);font-weight:800;margin:16px 0 0}
+.hero h1 .glow{color:var(--aqua)}
+.hero p.lead{font-size:clamp(1.02rem,1.7vw,1.16rem);color:#C6DEE6;max-width:30em;margin:20px 0 30px}
+.hero .eyebrow{color:var(--aqua)}.hero .eyebrow::before{background:var(--orange)}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-meta{display:flex;gap:30px;margin-top:30px;flex-wrap:wrap}
+.hero-meta .n{font-family:'Sora',sans-serif;font-weight:700;font-size:1.7rem;color:#fff}
+.hero-meta .l{font-size:.8rem;color:#9FC2CD;font-family:'JetBrains Mono',monospace}
+.car-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:7;width:44px;height:44px;border-radius:99px;border:1px solid rgba(255,255,255,.3);background:rgba(10,26,36,.35);color:#fff;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(6px);transition:.2s}
+.car-btn:hover{background:rgba(10,26,36,.6)}
+.car-btn svg{width:20px;height:20px}
+.car-prev{left:14px}.car-next{right:14px}
+.dots{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:7;display:flex;gap:9px}
+.dot{width:9px;height:9px;border-radius:99px;border:0;background:rgba(255,255,255,.4);cursor:pointer;transition:.25s;padding:0}
+.dot.active{background:#fff;width:26px}
+.hero-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:22px;padding:24px;backdrop-filter:blur(8px);box-shadow:0 30px 60px -30px rgba(0,0,0,.55)}
+.hero-card h3{color:#fff;font-size:1.1rem;margin-bottom:16px}
+.hc-list{list-style:none;display:grid;gap:10px}
+.hc-list li{display:flex;gap:12px;align-items:flex-start;color:#CFE6EE;font-size:.92rem;background:rgba(255,255,255,.05);padding:13px 15px;border-radius:13px;border:1px solid rgba(255,255,255,.08)}
+.hc-list li b{color:#fff;font-family:'Sora',sans-serif;display:block;font-size:.98rem;margin-bottom:2px}
+.hc-ico{width:32px;height:32px;border-radius:9px;flex:none;background:linear-gradient(135deg,var(--blue),var(--aqua));display:grid;place-items:center;color:#fff}
+.hc-ico svg{width:17px;height:17px}
+.hc-series{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hc-series a{display:flex;flex-direction:column;gap:2px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 15px;transition:.2s}
+.hc-series a:hover{background:rgba(255,255,255,.13);transform:translateY(-2px)}
+.hc-series .c{font-family:'Sora',sans-serif;font-weight:700;color:#fff;font-size:.98rem}
+.hc-series .b{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--aqua);text-transform:uppercase;letter-spacing:.04em}
+
+.clarity{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:1/1.04;box-shadow:0 40px 80px -30px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.12);user-select:none;touch-action:none;cursor:ew-resize}
+.clarity .layer{position:absolute;inset:0}
+.clarity .dirty{background:radial-gradient(80% 60% at 30% 20%, rgba(120,98,40,.55), transparent 60%),radial-gradient(70% 70% at 70% 80%, rgba(70,90,55,.5), transparent 60%),linear-gradient(140deg,#6f6238,#4a5a3a 55%,#3c4f3a)}
+.clarity .dirty::before{content:"";position:absolute;inset:0;opacity:.5;mix-blend-mode:overlay;background:repeating-radial-gradient(circle at 40% 60%,rgba(0,0,0,.25) 0 3px,transparent 3px 9px)}
+.clarity .clean{clip-path:inset(0 0 0 var(--split,55%));background:radial-gradient(80% 70% at 70% 20%, rgba(160,225,240,.7), transparent 60%),linear-gradient(150deg,#4fb6cf,#2f86b3 55%,#1f648c)}
+.clarity .clean::before{content:"";position:absolute;inset:0;opacity:.45;background:radial-gradient(circle at 65% 40%,rgba(255,255,255,.55),transparent 12%),radial-gradient(circle at 78% 70%,rgba(255,255,255,.4),transparent 9%),radial-gradient(circle at 55% 78%,rgba(255,255,255,.3),transparent 8%)}
+.clarity .handle{position:absolute;top:0;bottom:0;left:var(--split,55%);width:2px;background:#fff;z-index:3}
+.clarity .grip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:99px;background:#fff;display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.35);color:var(--blue)}
+.clarity .grip svg{width:22px;height:22px}
+.clarity .tag{position:absolute;bottom:16px;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:#fff;background:rgba(10,26,36,.5);padding:6px 11px;border-radius:99px;backdrop-filter:blur(4px);z-index:2}
+.clarity .tag.l{left:16px}.clarity .tag.r{right:16px}
+.wave{display:block;width:100%;height:auto;color:var(--paper)}
+
+.page-hero{position:relative;padding:120px 0 56px;background:linear-gradient(160deg,#0B2E40,#0C3346 60%,#0E435C);color:#fff;overflow:hidden;text-align:center}
+.page-hero::after{content:"";position:absolute;top:-30%;right:-8%;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(91,194,214,.2),transparent 70%)}
+.crumb{position:relative;z-index:2;font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--aqua)}
+.crumb a{color:#9FC2CD}.crumb a:hover{color:#fff}
+.page-hero h1{position:relative;z-index:2;font-size:clamp(2rem,4.6vw,3rem);font-weight:800;margin:14px auto 0;max-width:18em}
+.page-hero p{position:relative;z-index:2;color:#C6DEE6;max-width:46em;margin:14px auto 0;font-size:1.06rem}
+
+section{padding:78px 0}
+.sec-head{max-width:720px;margin:0 auto 44px;text-align:center}
+.sec-head h2{font-size:clamp(1.7rem,3.6vw,2.4rem);font-weight:700;margin:14px 0 0;color:var(--deep)}
+.sec-head p{color:#3c5663;font-size:1.05rem;margin-top:14px}
+
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.pillar{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:30px 26px;transition:.3s;position:relative;overflow:hidden;text-align:center}
+.pillar:hover{transform:translateY(-6px);box-shadow:var(--shadow-sm);border-color:transparent}
+.pillar .ico{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;margin:0 auto 18px;background:linear-gradient(135deg,var(--blue),var(--aqua));color:#fff}
+.pillar .ico svg{width:27px;height:27px}
+.pillar h3{font-size:1.22rem;color:var(--deep);margin-bottom:8px}
+.pillar p{color:#46606c;font-size:.96rem}
+
+.stack{display:grid;gap:26px;max-width:960px;margin:0 auto}
+.info-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:38px 36px;box-shadow:var(--shadow-sm)}
+.info-card .card-head{display:flex;align-items:center;gap:16px;margin-bottom:26px;flex-wrap:wrap;justify-content:center;text-align:center}
+.info-card .card-head img{height:54px}
+.info-card .card-head h2{font-size:1.5rem;color:var(--deep)}
+.info-card .card-head .sub{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--blue);letter-spacing:.06em;text-transform:uppercase}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}
+.fact{display:grid;grid-template-columns:148px 1fr;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}
+.fact dt{font-family:'JetBrains Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--blue);padding-top:3px}
+.fact dd{font-weight:600;color:var(--deep);font-size:1rem}
+.fact dd small{display:block;font-weight:400;color:#5c7480;font-size:.88rem;margin-top:2px}
+.capacity{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.cap-chip{font-family:'JetBrains Mono',monospace;font-size:.8rem;background:var(--mist);color:var(--deep);padding:6px 11px;border-radius:8px;border:1px solid var(--line)}
+.cap-chip b{color:var(--orange)}
+.vm-card{background:linear-gradient(160deg,var(--deep),var(--deep-2));color:#fff;border-radius:24px;padding:40px 38px;box-shadow:var(--shadow)}
+.vm-card .eyebrow{color:var(--aqua)}
+.vm-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:8px}
+.vm-block h3{font-size:1.35rem;margin:14px 0 12px}
+.vm-block p{color:#CBE0E8;font-size:1.02rem}
+.vm-block ul{list-style:none;margin-top:6px}
+.vm-block li{color:#CBE0E8;font-size:1rem;padding:8px 0 8px 26px;position:relative;border-bottom:1px solid rgba(255,255,255,.12)}
+.vm-block li:last-child{border-bottom:0}
+.vm-block li::before{content:"";position:absolute;left:0;top:15px;width:11px;height:11px;border-radius:3px;background:var(--orange)}
+.tagline-band{background:linear-gradient(135deg,var(--blue),var(--aqua));color:#fff;text-align:center;border-radius:26px;padding:56px 30px;box-shadow:var(--shadow);max-width:960px;margin:0 auto}
+.tagline-band .eyebrow{color:#fff;justify-content:center}.tagline-band .eyebrow::before{background:#fff}
+.tagline-band h2{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;margin-top:16px;letter-spacing:-.01em}
+.tagline-band h2 .o{color:var(--deep)}
+.tagline-band p{margin-top:14px;color:#EAF6FA;font-size:1.05rem}
+
+.toolbar{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:22px}
+.search{position:relative;flex:1;min-width:240px;max-width:440px}
+.search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#6b8390}
+.search input{width:100%;padding:13px 16px 13px 44px;border:1.5px solid var(--line);border-radius:99px;font-family:inherit;font-size:16px;background:#fff;color:var(--ink);transition:.2s}
+.search input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(43,123,186,.1)}
+.chips{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px;justify-content:center}
+.chip{font-size:.84rem;font-weight:600;color:var(--deep);background:#fff;border:1.5px solid var(--line);padding:8px 15px;border-radius:99px;cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--blue);color:var(--blue)}
+.chip.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.count{font-size:.85rem;color:#6b8390;font-family:'JetBrains Mono',monospace;margin-bottom:22px;text-align:center}
+.prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.prod{display:block;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px;transition:.3s;position:relative;overflow:hidden}
+.prod::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--blue),var(--aqua));transform:scaleY(0);transform-origin:top;transition:.3s}
+.prod:hover{box-shadow:var(--shadow-sm);transform:translateY(-4px)}
+.prod:hover::before{transform:scaleY(1)}
+.prod-img{margin:-4px 0 14px}.prod-img img{border-radius:12px;max-height:150px;width:100%;object-fit:cover;border:1px solid var(--line)}
+.prod .top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px}
+.prod h3{font-size:1.4rem;color:var(--deep)}
+.prod .base{font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:#fff;background:var(--blue);padding:5px 9px;border-radius:7px;white-space:nowrap}
+.prod .catline{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.prod .catline span{font-size:.7rem;font-weight:600;color:var(--blue);background:var(--mist);padding:4px 10px;border-radius:99px}
+.prod p.d{color:#46606c;font-size:.93rem;margin-bottom:14px}
+.prod .more{display:inline-flex;align-items:center;gap:.4em;margin-top:14px;font-weight:700;font-size:.88rem;color:var(--blue)}
+.prod .more svg{width:15px;height:15px;transition:.2s}
+.prod:hover .more svg{transform:translateX(3px)}
+.empty{display:none;text-align:center;padding:60px 20px;color:#6b8390}
+.empty.show{display:block}
+.empty svg{width:46px;height:46px;color:var(--line);margin:0 auto 14px}
+
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:8px 22px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.spec{display:flex;justify-content:space-between;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.86rem;padding:6px 0;border-bottom:1px dotted var(--line)}
+.spec .k{color:#6b8390}.spec .v{color:var(--deep);font-weight:500;text-align:right}
+
+.detail-card{max-width:820px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:24px;padding:36px;box-shadow:var(--shadow-sm)}
+.detail-card h2{font-size:1.3rem;color:var(--deep);margin:6px 0 10px}
+.detail-card p{color:#46606c}
+.detail-card .app{color:#5c7480;font-size:.95rem;margin-top:14px}
+.detail-img{border-radius:16px;border:1px solid var(--line);margin-bottom:20px;max-height:260px;width:100%;object-fit:cover}
+.grade-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;max-width:900px;margin:0 auto}
+.grade{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;transition:.25s}
+.grade:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:transparent}
+.grade .g{font-family:'Sora',sans-serif;font-weight:700;font-size:1.12rem;color:var(--deep);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.grade .g svg{width:16px;height:16px;color:var(--orange)}
+.grade .n{font-size:.86rem;color:#5c7480}
+
+.gp-wrap{max-width:760px;margin:0 auto}
+.dl-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.dl{font-size:.9rem;font-weight:700;padding:13px 20px;border-radius:12px;border:1.6px solid var(--line);display:inline-flex;gap:.55em;align-items:center;color:var(--deep);background:#fff;transition:.2s;cursor:pointer;font-family:inherit}
+.dl:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+.dl svg{width:16px;height:16px;color:var(--orange)}
+.dl.primary{background:var(--orange);color:#fff;border-color:var(--orange)}
+.dl.primary svg{color:#fff}
+.dl.primary:hover{color:#fff;filter:brightness(1.05)}
+
+.eng-band{background:var(--deep);color:#fff;position:relative;overflow:hidden}
+.eng-band::before{content:"";position:absolute;top:-30%;right:-10%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(91,194,214,.18),transparent 70%)}
+.eng-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative;z-index:2}
+.eng-item{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:22px;transition:.3s}
+.eng-item:hover{background:rgba(255,255,255,.09);transform:translateY(-4px)}
+.eng-item .no{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--orange);font-size:.9rem}
+.eng-item h4{font-size:1.05rem;margin:8px 0 6px}
+.eng-item p{color:#AFCBD5;font-size:.88rem}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.shot{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);background:linear-gradient(150deg,#163b4f,#0e435c 60%,#2f6f8c);display:grid;place-items:center;text-align:center;color:#fff}
+.shot .ph{display:grid;place-items:center;gap:10px;padding:18px}
+.shot .ph svg{width:40px;height:40px;color:rgba(255,255,255,.6)}
+.shot .ph b{font-family:'Sora',sans-serif;font-weight:600;font-size:1rem}
+.shot .ph small{font-size:.78rem;color:rgba(255,255,255,.7)}
+.shot .badge{position:absolute;top:12px;left:12px;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;background:rgba(243,146,0,.92);color:#fff;padding:4px 9px;border-radius:99px}
+.shot::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.03) 0 12px,transparent 12px 24px)}
+
+.stat-row{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;margin-bottom:46px;padding-bottom:36px;border-bottom:1px solid var(--line)}
+.stat{text-align:center}
+.stat .n{font-family:'Sora',sans-serif;font-weight:800;font-size:2.6rem;color:var(--blue);line-height:1}
+.stat .n span{color:var(--orange)}
+.stat .l{color:#46606c;font-size:.92rem;margin-top:4px;max-width:15em}
+.industries{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:30px}
+.ind{font-size:.85rem;font-weight:600;color:var(--deep);background:#fff;border:1.5px solid var(--line);padding:8px 15px;border-radius:99px;cursor:pointer;transition:.2s}
+.ind:hover{border-color:var(--blue);color:var(--blue)}
+.ind.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.client-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.client{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;min-height:90px;transition:.25s;cursor:pointer}
+.client:hover{box-shadow:var(--shadow-sm);transform:translateY(-3px);border-color:var(--blue)}
+.client .nm{font-family:'Sora',sans-serif;font-weight:600;font-size:.82rem;color:var(--deep);line-height:1.25}
+.client .sec{font-size:.68rem;color:#8aa0aa;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.04em}
+
+.modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal-bg{position:absolute;inset:0;background:rgba(10,26,36,.55);backdrop-filter:blur(3px)}
+.modal-card{position:relative;background:#fff;border-radius:22px;max-width:480px;width:100%;padding:32px;box-shadow:var(--shadow);animation:pop .25s ease;max-height:90vh;overflow:auto}
+.modal-card.wide{max-width:640px}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.modal-card .x{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:99px;border:1px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;color:#6b8390;z-index:2}
+.modal-card .x:hover{color:var(--deep);border-color:var(--blue)}
+.modal-card .eyebrow{color:var(--blue)}
+.modal-card h3{font-size:1.35rem;color:var(--deep);margin:10px 0 4px}
+.modal-card .desc{color:#5c7480;font-size:.92rem;margin-bottom:18px}
+.modal-card .lbl{font-family:'JetBrains Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#6b8390;margin-bottom:10px}
+.prod-chips{display:flex;gap:8px;flex-wrap:wrap}
+.pc{font-size:.84rem;font-weight:600;padding:7px 13px;border-radius:10px;background:var(--mist);color:var(--deep);border:1px solid var(--line);transition:.2s}
+a.pc:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+.dm-or{text-align:center;margin-top:14px}
+.dl-link{font-size:.85rem;color:var(--blue);font-weight:600;text-decoration:underline}
+.dl-link:hover{color:var(--deep)}
+
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.feat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;transition:.25s;text-align:center}
+.feat:hover{box-shadow:var(--shadow-sm);transform:translateY(-4px);border-color:transparent}
+.feat h4{font-size:1.05rem;color:var(--deep)}
+.feat span{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--blue);text-transform:uppercase;letter-spacing:.05em}
+.feat p{font-size:.85rem;color:#5c7480;margin-top:8px}
+.center-cta{text-align:center;margin-top:30px}
+
+.cta-band{background:linear-gradient(135deg,var(--blue),var(--deep-2));color:#fff;border-radius:26px;padding:50px 44px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.cta-band h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:700;max-width:18em}
+.cta-band p{color:#D6EAF1;margin-top:8px}
+
+.contact-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:start;max-width:1000px;margin:0 auto}
+.contact-info .ci{display:flex;gap:14px;margin-bottom:22px;align-items:flex-start}
+.contact-info .ci .ico{width:42px;height:42px;border-radius:12px;flex:none;display:grid;place-items:center;background:#fff;border:1px solid var(--line);color:var(--blue)}
+.contact-info .ci.wa .ico{background:var(--wa);border-color:var(--wa);color:#fff}
+.contact-info .ci .ico svg{width:20px;height:20px}
+.contact-info .ci h4{font-size:1rem;color:var(--deep)}
+.contact-info .ci p{color:#46606c;font-size:.92rem}
+.contact-info .ci a{color:var(--blue);font-weight:600}
+.wa-cta{margin-top:8px}
+.form{background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px;box-shadow:var(--shadow-sm)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.82rem;font-weight:600;color:var(--deep);margin-bottom:7px;font-family:'JetBrains Mono',monospace}
+.field input,.field textarea,.field select{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:16px;color:var(--ink);background:var(--paper);transition:.2s}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--blue);background:#fff;box-shadow:0 0 0 4px rgba(43,123,186,.1)}
+.field textarea{resize:vertical;min-height:120px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-note{font-size:.8rem;color:#6b8390;margin-top:12px;text-align:center}
+
+/* admin */
+.admin{max-width:1000px;margin:0 auto}
+.admin-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.save-state{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#2e7d32;margin-left:auto}
+.admin-note{background:#FFF7E8;border:1px solid #F3D9A6;color:#7a5a1e;border-radius:14px;padding:14px 18px;font-size:.88rem;margin-bottom:22px}
+.admin-note b{color:#5e4413}
+.admin-list{display:grid;gap:12px}
+.arow{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.arow .ac{font-family:'Sora',sans-serif;font-weight:700;color:var(--deep);min-width:96px}
+.arow .ab{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:#fff;background:var(--blue);padding:3px 8px;border-radius:6px;white-space:nowrap}
+.arow .ad{color:#5c7480;font-size:.86rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arow .ag{font-size:.74rem;color:#6b8390;font-family:'JetBrains Mono',monospace;white-space:nowrap}
+.arow .acts{display:flex;gap:6px}
+.iconbtn{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;display:grid;place-items:center;color:#46606c;transition:.2s;flex:none}
+.iconbtn svg{width:16px;height:16px}
+.iconbtn:hover{border-color:var(--blue);color:var(--blue)}
+.iconbtn.danger:hover{border-color:#e0524d;color:#e0524d}
+.iconbtn:disabled{opacity:.35;cursor:default}
+.kv{display:grid;grid-template-columns:1fr 1.3fr 38px;gap:8px;margin-bottom:8px}
+.kv input{padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:15px;background:var(--paper)}
+.kv input:focus{outline:none;border-color:var(--blue);background:#fff}
+.cats-pick{display:flex;flex-wrap:wrap;gap:8px}
+.catpick{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;background:var(--paper);border:1.5px solid var(--line);padding:7px 12px;border-radius:99px;cursor:pointer}
+.catpick input{accent-color:var(--blue);width:16px;height:16px}
+.img-prev{margin-top:10px;max-height:90px;border-radius:10px;border:1px solid var(--line)}
+.sub-add{font-size:.82rem;font-weight:700;color:var(--blue);cursor:pointer;display:inline-flex;align-items:center;gap:.4em;margin-top:4px;background:none;border:0;font-family:inherit}
+.admin-tabs{display:inline-flex;gap:6px;background:var(--mist);padding:6px;border-radius:14px;margin-bottom:20px}
+.atab{border:0;background:none;font-family:'Sora',sans-serif;font-weight:700;font-size:.92rem;color:#4a6573;padding:10px 18px;border-radius:10px;cursor:pointer;transition:.2s}
+.atab.active{background:#fff;color:var(--deep);box-shadow:var(--shadow-sm)}
+.module{display:none}.module.show{display:block}
+.badge{font-family:'JetBrains Mono',monospace;font-size:.64rem;letter-spacing:.04em;padding:3px 9px;border-radius:6px;white-space:nowrap;text-transform:uppercase}
+.badge.on{background:#E4F6E9;color:#1f7a3a;border:1px solid #B6E3C4}
+.badge.off{background:#FBE7E6;color:#b23b35;border:1px solid #F2C4C1}
+.arow .ap{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:#fff;background:var(--deep-2);padding:3px 8px;border-radius:6px;white-space:nowrap}
+.doc-up{display:grid;grid-template-columns:80px 1fr;gap:10px;align-items:center;margin-bottom:8px}
+.doc-up .dl-name{font-size:.84rem;color:#46606c;display:flex;align-items:center;gap:8px;min-width:0}
+.doc-up .dl-name .fn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.doc-up .tag{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:#6b8390;text-transform:uppercase}
+.doc-up label.upbtn{font-size:.8rem;font-weight:700;color:var(--blue);cursor:pointer;border:1.5px dashed var(--blue);border-radius:9px;padding:6px 12px;white-space:nowrap}
+.doc-up .clr{font-size:.78rem;color:#b23b35;cursor:pointer;background:none;border:0}
+.fld-sel{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);font-family:inherit;font-size:.95rem;color:var(--deep);background:#fff}
+.size-note{font-size:.78rem;color:#7a5a1e}
+
+footer{background:var(--ink);color:#9FB7C0;padding:54px 0 30px}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;margin-bottom:38px}
+.foot-logo{background:#fff;padding:12px 16px;border-radius:14px;display:inline-block}
+.foot-logo img{height:38px}
+footer p{font-size:.9rem;max-width:30em;margin-top:16px}
+footer h5{color:#fff;font-family:'Sora',sans-serif;font-size:.95rem;margin-bottom:14px}
+footer ul{list-style:none}
+footer ul li{margin-bottom:9px}
+footer ul a{font-size:.9rem;transition:.2s}
+footer ul a:hover{color:var(--aqua)}
+.foot-bot{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.82rem}
+.foot-bot .tag{color:var(--orange);font-family:'JetBrains Mono',monospace}
+.foot-bot a{color:#9FB7C0}.foot-bot a:hover{color:var(--aqua)}
+
+.reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal-off .reveal{opacity:1!important;transform:none!important}
+
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:42px}
+  .clarity{max-width:420px;margin:0 auto;width:100%}
+  .contact-grid{grid-template-columns:1fr;gap:34px}
+  .vm-grid{grid-template-columns:1fr;gap:24px}
+  .eng-grid,.feat-grid,.gallery{grid-template-columns:repeat(2,1fr)}
+  .client-grid{grid-template-columns:repeat(3,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .hamburger{display:block;z-index:120}
+  .nav-links{position:fixed;inset:0 0 0 auto;width:min(80vw,320px);background:#fff;flex-direction:column;align-items:stretch;gap:4px;padding:90px 22px 30px;transform:translateX(100%);transition:.35s;box-shadow:-20px 0 60px -20px rgba(12,51,70,.4);z-index:110}
+  .nav-links.open{transform:none}
+  .nav-links a.nav-a{padding:14px 16px;border-radius:12px;font-size:1.02rem}
+  .nav-links a.nav-a.active::after{display:none}
+  .nav-links a.nav-a.active{background:var(--mist)}
+  .nav-links .btn{margin-top:10px;justify-content:center}
+  section{padding:58px 0}
+  .slide{padding:80px 0 48px}
+  .pillars,.prod-grid,.two,.btn-row,.grade-grid,.feat-grid{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr;gap:0}
+  .eng-grid,.gallery,.hc-series{grid-template-columns:1fr}
+  .client-grid{grid-template-columns:repeat(2,1fr)}
+  .foot-grid{grid-template-columns:1fr}
+  .fact{grid-template-columns:1fr}.fact dt{padding-top:0}
+  .cta-band{padding:34px 26px;text-align:center;justify-content:center}
+  .toolbar{flex-direction:column;align-items:stretch}.search{max-width:none}
+  .info-card,.vm-card,.detail-card{padding:28px 22px}
+  .arow{flex-wrap:wrap}.arow .ad{flex-basis:100%;white-space:normal}
+  .kv{grid-template-columns:1fr 1fr 34px}
+}
+@media(max-width:480px){.client-grid{grid-template-columns:1fr}.hero-meta{gap:18px}.slide{padding:74px 0 42px}.hero-card{padding:18px}.hero-meta .n{font-size:1.45rem}.hero-grid{gap:30px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.slides{transition:none}}
+</style></head><body><header id="header"><div class="wrap nav"><a href="index.html" class="brand" aria-label="Beranda"><img src="images/logo-ckc.png" alt="PT. Citra Kurnia Chemindo - Clevron"></a><nav><ul class="nav-links" id="navLinks"><li><a href="index.html" class="nav-a">Beranda</a></li><li><a href="about.html" class="nav-a">Tentang Kami</a></li><li><a href="products.html" class="nav-a">Produk</a></li><li><a href="engineering.html" class="nav-a">Rancang Bangun</a></li><li><a href="clients.html" class="nav-a active">Klien</a></li><li><a href="contact.html" class="btn btn-primary">Hubungi Kami</a></li></ul></nav><button class="hamburger" id="hamburger" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button></div></header><div class="nav-overlay" id="navOverlay"></div><section class="page-hero"><div class="wrap"><div class="crumb"><a href="index.html">Beranda</a> / Klien</div><h1>Dipercaya lintas industri di seluruh Indonesia.</h1><p>Puluhan perusahaan dari berbagai sektor mempercayakan pengolahan air limbahnya kepada Clevron. Pilih sektor untuk menyaring, atau klik nama klien untuk melihat produk yang digunakan.</p></div></section><section><div class="wrap"><div class="stat-row reveal"><div class="stat"><div class="n">50<span>+</span></div><div class="l">perusahaan industri menjadi mitra</div></div><div class="stat"><div class="n">15<span>+</span></div><div class="l">sektor industri terlayani</div></div><div class="stat"><div class="n">3.700<span>+</span></div><div class="l">ton kapasitas produksi per tahun</div></div></div><div class="sec-head reveal" style="margin-bottom:20px"><span class="eyebrow">Filter Sektor Industri</span><h2 style="font-size:1.4rem">Pilih sektor untuk menyaring klien</h2></div><div class="industries" id="inds"><button class="ind active" data-ind="all">Semua Sektor</button><button class="ind" data-ind="otomotif">Otomotif</button><button class="ind" data-ind="fnb">Food & Beverages</button><button class="ind" data-ind="tekstil">Tekstil & Dyestuff</button><button class="ind" data-ind="farmasi">Farmasi</button><button class="ind" data-ind="paper">Paper Mills</button><button class="ind" data-ind="plating">Elektroplating & Metal</button><button class="ind" data-ind="kosmetik">Kosmetik & Homecare</button><button class="ind" data-ind="oilgas">Oil & Gas</button><button class="ind" data-ind="konstruksi">Konstruksi & Adhesive</button><button class="ind" data-ind="packaging">Packaging</button><button class="ind" data-ind="baterai">Baterai</button><button class="ind" data-ind="municipal">Municipal / PDAM</button><button class="ind" data-ind="footwear">Footwear</button><button class="ind" data-ind="flavour">Flavour & Fragrance</button><button class="ind" data-ind="lainnya">Lainnya</button></div><div class="count" id="ccount"></div><div class="client-grid" id="cgrid"><button class="client" data-ind="paper" data-name="PT. Eco Paper Indonesia" data-desc="Paper mills - produksi" data-prods="Clevpac 330"><span class="nm">PT. Eco Paper Indonesia</span><span class="sec">Paper Mills</span></button><button class="client" data-ind="fnb" data-name="PT. Santos Jaya Abadi" data-desc="F&B (kopi) - produksi" data-prods="Clevpac 108|NaOH|Clevfloc 130|Clevfloc 230"><span class="nm">PT. Santos Jaya Abadi</span><span class="sec">Food & Beverages</span></button><button class="client" data-ind="municipal" data-name="PDAM Tirta Jati Cirebon" data-desc="Municipal water treatment" data-prods="Clevpac 110"><span class="nm">PDAM Tirta Jati Cirebon</span><span class="sec">Municipal / PDAM</span></button><button class="client" data-ind="fnb" data-name="PT. Global Dairi Alami" data-desc="F&B (susu) - produksi" data-prods="Clevpac 112|Clevfloc 230"><span class="nm">PT. Global Dairi Alami</span><span class="sec">Food & Beverages</span></button><button class="client" data-ind="otomotif" data-name="PT. Daido Metal Indonesia" data-desc="Komponen otomotif - engine block (plating)" data-prods="Clevpro 104 S|Clevfloc A-101|Clevpro 108|Cleval 100"><span class="nm">PT. Daido Metal Indonesia</span><span class="sec">Otomotif</span></button><button class="client" data-ind="konstruksi" data-name="PT. Sika Indonesia" data-desc="Additive konstruksi - produksi" data-prods="Clevpro 105|Clevpac 431|Clevfloc C-101|Clevpro 107"><span class="nm">PT. Sika Indonesia</span><span class="sec">Konstruksi & Adhesive</span></button><button class="client" data-ind="tekstil" data-name="PT. Lucky Print Abadi" data-desc="Printing color - produksi" data-prods="Cleval 302|Clevdec 575"><span class="nm">PT. Lucky Print Abadi</span><span class="sec">Tekstil & Dyestuff</span></button><button class="client" data-ind="tekstil" data-name="PT. SN Unggul" data-desc="Dyestuff yarn - produksi" data-prods="Clevpac 431|Clevdec 450"><span class="nm">PT. SN Unggul</span><span class="sec">Tekstil & Dyestuff</span></button><button class="client" data-ind="oilgas" data-name="PT. Schlumberger Indonesia" data-desc="Oil & gas - rinse storage" data-prods="Clevpac 106|Clevpro 104|Clevfloc A-101"><span class="nm">PT. Schlumberger Indonesia</span><span class="sec">Oil & Gas</span></button><button class="client" data-ind="kosmetik" data-name="PT. Paragon Technology and Innovation" data-desc="Kosmetik - produksi" data-prods="Clevpac 108|NaOH"><span class="nm">PT. Paragon Technology and Innovation</span><span class="sec">Kosmetik & Homecare</span></button><button class="client" data-ind="otomotif" data-name="PT. TD Automotive Compressor Indonesia" data-desc="Komponen otomotif - compressor" data-prods="Clevpac 306"><span class="nm">PT. TD Automotive Compressor Indonesia</span><span class="sec">Otomotif</span></button><button class="client" data-ind="otomotif" data-name="PT. INKOASKU" data-desc="Komponen otomotif - compressor (coolant)" data-prods="Clevpac 306"><span class="nm">PT. INKOASKU</span><span class="sec">Otomotif</span></button><button class="client" data-ind="fnb" data-name="PT. Garindo Food International" data-desc="F&B - produksi" data-prods="Clevpac 310|Clevpro 101|Clevfloc 101"><span class="nm">PT. Garindo Food International</span><span class="sec">Food & Beverages</span></button><button class="client" data-ind="otomotif" data-name="PT. Tiaho Nusantara" data-desc="Komponen otomotif - spare part" data-prods="Clevpac 308|Clevpro 101|Clevfloc 101"><span class="nm">PT. Tiaho Nusantara</span><span class="sec">Otomotif</span></button><button class="client" data-ind="flavour" data-name="PT. Mane Indonesia" data-desc="Flavour & fragrance - produksi" data-prods="Clevpac 310|NaOH"><span class="nm">PT. Mane Indonesia</span><span class="sec">Flavour & Fragrance</span></button><button class="client" data-ind="tekstil" data-name="PT. Harapan Kurnia Textile Indonesia" data-desc="Tekstil - produksi" data-prods="Clevpac 110|Clevdec 450"><span class="nm">PT. Harapan Kurnia Textile Indonesia</span><span class="sec">Tekstil & Dyestuff</span></button><button class="client" data-ind="farmasi" data-name="PT. Pertiwi Agung (Landson)" data-desc="Farmasi (obat) - produksi" data-prods="Clevpac 108|Clevdec 450|Clevfloc 130"><span class="nm">PT. Pertiwi Agung (Landson)</span><span class="sec">Farmasi</span></button><button class="client" data-ind="otomotif" data-name="PT. Priuk Perkasa Abadi" data-desc="Otomotif - plating" data-prods="Cleval Series|Clevpro 104"><span class="nm">PT. Priuk Perkasa Abadi</span><span class="sec">Otomotif</span></button><button class="client" data-ind="footwear" data-name="PT. Shoetown Footware Indonesia" data-desc="Produksi sepatu (Crocs)" data-prods="Clevpac 306"><span class="nm">PT. Shoetown Footware Indonesia</span><span class="sec">Footwear</span></button><button class="client" data-ind="fnb" data-name="PT. Hydrocolloid Indonesia" data-desc="Sewage food - produksi" data-prods="Cleval 120|Clevfloc A-105|Clevfloc 230"><span class="nm">PT. Hydrocolloid Indonesia</span><span class="sec">Food & Beverages</span></button><button class="client" data-ind="otomotif" data-name="PT. Astra Otoparts, Tbk" data-desc="Komponen otomotif - engine block (oli waste)" data-prods="Cleval 100|Kapur"><span class="nm">PT. Astra Otoparts, Tbk</span><span class="sec">Otomotif</span></button><button class="client" data-ind="kosmetik" data-name="PT. PZ Cussons Indonesia" data-desc="Homecare - produksi" data-prods="Clevpac 312"><span class="nm">PT. PZ Cussons Indonesia</span><span class="sec">Kosmetik & Homecare</span></button><button class="client" data-ind="otomotif" data-name="Toyota Astra Int." data-desc="Otomotif - car mfg (painting)" data-prods="Clevpac 110"><span class="nm">Toyota Astra Int.</span><span class="sec">Otomotif</span></button><button class="client" data-ind="otomotif" data-name="PT. Nissin Mfg Indonesia" data-desc="Komponen otomotif - spare parts (plating)" data-prods="Clevpac 110"><span class="nm">PT. Nissin Mfg Indonesia</span><span class="sec">Otomotif</span></button><button class="client" data-ind="kosmetik" data-name="PT. Reckitt Benckiser Indonesia" data-desc="Homecare - produksi" data-prods="Antifoam"><span class="nm">PT. Reckitt Benckiser Indonesia</span><span class="sec">Kosmetik & Homecare</span></button><button class="client" data-ind="lainnya" data-name="PT. Chubb Safes Indonesia (Gunnebo)" data-desc="Safety equipment - produksi" data-prods="Clevob 603|Clevfloc A-101|Clevpro 104"><span class="nm">PT. Chubb Safes Indonesia (Gunnebo)</span><span class="sec">Lainnya</span></button><button class="client" data-ind="packaging" data-name="PT. Detpack Indonesia" data-desc="Packaging - produksi" data-prods="Clevob 406|Clevfloc A-101|Clevpro 104"><span class="nm">PT. Detpack Indonesia</span><span class="sec">Packaging</span></button><button class="client" data-ind="fnb" data-name="PT. Java Seafood Indonesia" data-desc="F&B (seafood) - produksi" data-prods="Clevpac 410|Clevfloc A-101"><span class="nm">PT. Java Seafood Indonesia</span><span class="sec">Food & Beverages</span></button><button class="client" data-ind="otomotif" data-name="PT. Karya Bahana Unigam" data-desc="Otomotif auxiliary - produksi" data-prods="Clevob 202|Clevfloc A-101|Clevpro 104"><span class="nm">PT. Karya Bahana Unigam</span><span class="sec">Otomotif</span></button><button class="client" data-ind="fnb" data-name="PT. Victory Retailindo" data-desc="Supermarket & food processing" data-prods="Clevpac 329|Clevpro 101"><span class="nm">PT. Victory Retailindo</span><span class="sec">Food & Beverages</span></button><button class="client" data-ind="municipal" data-name="PT. Hosaindo Sejahtera Abadi" data-desc="Private municipal water treatment" data-prods="Clevpac 507|Clevpro 105|NaOCl"><span class="nm">PT. Hosaindo Sejahtera Abadi</span><span class="sec">Municipal / PDAM</span></button><button class="client" data-ind="paper" data-name="PT. Papyrus Sakti Paper Mills" data-desc="Paper mills - produksi" data-prods="Clevfer 130"><span class="nm">PT. Papyrus Sakti Paper Mills</span><span class="sec">Paper Mills</span></button><button class="client" data-ind="otomotif" data-name="PT. Nissan Motor Indonesia" data-desc="Otomotif - car mfg" data-prods="Clevpac 110"><span class="nm">PT. Nissan Motor Indonesia</span><span class="sec">Otomotif</span></button><button class="client" data-ind="otomotif" data-name="PT. Inti Ganda Perdana (IGP)" data-desc="Otomotif - spare parts" data-prods="Cleval 308"><span class="nm">PT. Inti Ganda Perdana (IGP)</span><span class="sec">Otomotif</span></button><button class="client" data-ind="otomotif" data-name="PT. FCC Indonesia" data-desc="Komponen otomotif - disc clutch" data-prods="Clevob 201|Clevfloc A-101|Clevpro 104"><span class="nm">PT. FCC Indonesia</span><span class="sec">Otomotif</span></button><button class="client" data-ind="lainnya" data-name="PT. Rubber and Rubber Tech" data-desc="Tire industry - produksi" data-prods="Clevob 107|Clevfloc A-101|Clevpro 104"><span class="nm">PT. Rubber and Rubber Tech</span><span class="sec">Lainnya</span></button><button class="client" data-ind="tekstil" data-name="PT. Kamarga Kurnia Textile Industry" data-desc="Tekstil - produksi" data-prods="Cleval 308|Clevdec 450"><span class="nm">PT. Kamarga Kurnia Textile Industry</span><span class="sec">Tekstil & Dyestuff</span></button><button class="client" data-ind="tekstil" data-name="PT. Oriental Embroidery" data-desc="Tekstil - produksi" data-prods="Clevpac 108"><span class="nm">PT. Oriental Embroidery</span><span class="sec">Tekstil & Dyestuff</span></button><button class="client" data-ind="otomotif" data-name="PT. Enkei Marutoyo Painting Indonesia" data-desc="Komponen otomotif - velg" data-prods="Clevpac 329|Clevfloc 130|Clevpro 101"><span class="nm">PT. Enkei Marutoyo Painting Indonesia</span><span class="sec">Otomotif</span></button><button class="client" data-ind="tekstil" data-name="PT. Cipta Harmoni Jaya" data-desc="Tekstil - leather" data-prods="Clevdec 450|Clevpro 406"><span class="nm">PT. Cipta Harmoni Jaya</span><span class="sec">Tekstil & Dyestuff</span></button><button class="client" data-ind="otomotif" data-name="PT. Denso Indonesia" data-desc="Komponen otomotif - AC" data-prods="Clevpac 312"><span class="nm">PT. Denso Indonesia</span><span class="sec">Otomotif</span></button><button class="client" data-ind="otomotif" data-name="PT. Gemala Kempa Daya" data-desc="Komponen otomotif - chassis" data-prods="Clevpac 110|Clevfloc 130"><span class="nm">PT. Gemala Kempa Daya</span><span class="sec">Otomotif</span></button><button class="client" data-ind="otomotif" data-name="PT. Saneng Industrial" data-desc="Komponen otomotif - body kit" data-prods="Clevpac 106"><span class="nm">PT. Saneng Industrial</span><span class="sec">Otomotif</span></button><button class="client" data-ind="farmasi" data-name="PT. Indofarma, Tbk" data-desc="Farmasi (obat) - produksi" data-prods="Clevpac 110|Clevfloc 130|Clevpro 101"><span class="nm">PT. Indofarma, Tbk</span><span class="sec">Farmasi</span></button><button class="client" data-ind="plating" data-name="PT. Panna Wirya Jaya" data-desc="Electroplating - produksi" data-prods="Clevpac 110|Clevfloc 130"><span class="nm">PT. Panna Wirya Jaya</span><span class="sec">Elektroplating & Metal</span></button><button class="client" data-ind="footwear" data-name="PT. Victory Chingluh Indonesia" data-desc="Garment - footwear" data-prods="Clevpac 108"><span class="nm">PT. Victory Chingluh Indonesia</span><span class="sec">Footwear</span></button><button class="client" data-ind="plating" data-name="PT. Saranacentra Bajatama" data-desc="Metal - zinc coated" data-prods="Cleval 308|Clevpro 152|Clevfloc 101"><span class="nm">PT. Saranacentra Bajatama</span><span class="sec">Elektroplating & Metal</span></button><button class="client" data-ind="tekstil" data-name="PT. Winner Sumbiri Knitting" data-desc="Tekstil - knitting" data-prods="Clevpac 108|Clevdec 575|Clevfloc 130"><span class="nm">PT. Winner Sumbiri Knitting</span><span class="sec">Tekstil & Dyestuff</span></button><button class="client" data-ind="tekstil" data-name="PT. Youm Kwang Indonesia" data-desc="Dyestuff yarn - produksi" data-prods="Clevpac 411|NaOH|Clevfloc 130"><span class="nm">PT. Youm Kwang Indonesia</span><span class="sec">Tekstil & Dyestuff</span></button><button class="client" data-ind="fnb" data-name="PT. Multirasa Nusantara (Yoshinoya)" data-desc="F&B - produksi" data-prods="Clevpac 108|Clevpro 272|NaOH"><span class="nm">PT. Multirasa Nusantara (Yoshinoya)</span><span class="sec">Food & Beverages</span></button><button class="client" data-ind="konstruksi" data-name="PT. Polychemie Asia Pasifik Permai" data-desc="Adhesive industries - produksi" data-prods="Clevpac 111|Clevfloc 130|Clevbac 701"><span class="nm">PT. Polychemie Asia Pasifik Permai</span><span class="sec">Konstruksi & Adhesive</span></button><button class="client" data-ind="fnb" data-name="PT. Sarihusada Generasi Mahardika" data-desc="Food industries - produksi" data-prods="Clevpac 108|Clevfloc 130"><span class="nm">PT. Sarihusada Generasi Mahardika</span><span class="sec">Food & Beverages</span></button><button class="client" data-ind="konstruksi" data-name="PT. Hitachi Construction Machinery Indonesia" data-desc="Construction building - produksi" data-prods="Clevpac 110|Clevfloc 130"><span class="nm">PT. Hitachi Construction Machinery Indonesia</span><span class="sec">Konstruksi & Adhesive</span></button><button class="client" data-ind="otomotif" data-name="PT. Velasto Indonesia" data-desc="Komponen otomotif - produksi" data-prods="Clevpac 108|Clevfloc 101"><span class="nm">PT. Velasto Indonesia</span><span class="sec">Otomotif</span></button><button class="client" data-ind="flavour" data-name="PT. DBFF Botton Indonesia" data-desc="Flavour & fragrance - produksi" data-prods="Clevpac 310|Clevfloc 130|Clevpro 101"><span class="nm">PT. DBFF Botton Indonesia</span><span class="sec">Flavour & Fragrance</span></button><button class="client" data-ind="fnb" data-name="PT. Indopangan Sentosa" data-desc="Food industries - produksi" data-prods="Clevpac 329|Clevfloc 130|Clevpro 101"><span class="nm">PT. Indopangan Sentosa</span><span class="sec">Food & Beverages</span></button><button class="client" data-ind="baterai" data-name="PT. Rayovac Battery Indonesia (Energizer)" data-desc="Battery industries - produksi" data-prods="Clevpro 173"><span class="nm">PT. Rayovac Battery Indonesia (Energizer)</span><span class="sec">Baterai</span></button><button class="client" data-ind="lainnya" data-name="PT. Twink Indonesia" data-desc="PLN vendor" data-prods="Clevpac 106"><span class="nm">PT. Twink Indonesia</span><span class="sec">Lainnya</span></button></div><div class="empty" id="cempty"><p>Belum ada klien pada sektor ini.</p></div></div></section><div class="modal" id="modal"><div class="modal-bg" id="mbg"></div><div class="modal-card"><button class="x" id="mx" aria-label="Tutup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><span class="eyebrow">Produk yang Digunakan</span><h3 id="m-name"></h3><div class="desc" id="m-desc"></div><div class="lbl">Grade Clevron</div><div class="prod-chips" id="m-prods"></div></div></div><footer><div class="wrap"><div class="foot-grid"><div><div class="foot-logo"><img src="images/logo-ckc.png" alt="PT. Citra Kurnia Chemindo - Clevron"></div><p>Total solution dalam waste water treatment - bahan kimia, rancang bangun, dan operasional. Save water, save the next generation.</p></div><div><h5>Navigasi</h5><ul><li><a href="about.html">Tentang Kami</a></li><li><a href="products.html">Produk</a></li><li><a href="engineering.html">Rancang Bangun</a></li><li><a href="clients.html">Klien</a></li><li><a href="contact.html">Kontak</a></li></ul></div><div><h5>Kontak</h5><ul><li><a href="https://wa.me/6282217318778" target="_blank" rel="noopener">WhatsApp: 0822-1731-8778</a></li><li><a href="mailto:citra_kurnia_chemindo@clevron.id">citra_kurnia_chemindo@clevron.id</a></li><li><a href="contact.html">Kota Legenda, Bekasi Timur</a></li></ul></div></div><div class="foot-bot"><span>&copy; <span id="year"></span> PT. Citra Kurnia Chemindo. Seluruh hak cipta dilindungi.</span><span class="tag">SAVE WATER &middot; SAVE LIFE</span></div></div></footer><script>
+(function(){'use strict';
+var header=document.getElementById('header');
+if(header && !header.classList.contains('scrolled')){
+  var onScroll=function(){header.classList.toggle('scrolled',window.scrollY>20);};
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+}
+var ham=document.getElementById('hamburger'),links=document.getElementById('navLinks'),ov=document.getElementById('navOverlay');
+if(ham&&links&&ov){
+  var close=function(){links.classList.remove('open');ov.classList.remove('open');ham.classList.remove('open');ham.setAttribute('aria-expanded','false');};
+  ham.addEventListener('click',function(){var o=links.classList.toggle('open');ov.classList.toggle('open',o);ham.classList.toggle('open',o);ham.setAttribute('aria-expanded',o?'true':'false');});
+  ov.addEventListener('click',close);
+}
+// Reveal-on-scroll. Resilient: animation must NEVER hide content.
+// Also auto-observes elements injected after load (e.g. grade cards, product cards).
+function showAll(){document.body.classList.add('reveal-off');var n=document.querySelectorAll('.reveal');for(var i=0;i<n.length;i++)n[i].classList.add('in');}
+try{
+  if('IntersectionObserver' in window){
+    var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}});},{threshold:0.08});
+    var observeIn=function(root){var els=(root||document).querySelectorAll('.reveal:not(.in)');for(var i=0;i<els.length;i++)ro.observe(els[i]);};
+    observeIn(document);
+    if('MutationObserver' in window){
+      var mo=new MutationObserver(function(muts){for(var j=0;j<muts.length;j++){var a=muts[j].addedNodes;for(var k=0;k<a.length;k++){var nd=a[k];if(nd.nodeType===1){if(nd.classList&&nd.classList.contains('reveal'))ro.observe(nd);if(nd.querySelectorAll)observeIn(nd);}}}});
+      mo.observe(document.body,{childList:true,subtree:true});
+    }
+    // safety net: if anything is still hidden after 1.6s, reveal it
+    setTimeout(function(){var h=document.querySelectorAll('.reveal:not(.in)');for(var i=0;i<h.length;i++){var r=h[i].getBoundingClientRect();if(r.top<window.innerHeight&&r.bottom>0)h[i].classList.add('in');}},1600);
+  }else{showAll();}
+}catch(e){showAll();}
+var y=document.getElementById('year');if(y)y.textContent=new Date().getFullYear();
+})();
+
+(function(){
+var inds=document.getElementById('inds'),grid=document.getElementById('cgrid'),
+count=document.getElementById('ccount'),empty=document.getElementById('cempty');
+var cards=Array.prototype.slice.call(grid.querySelectorAll('.client'));var cur='all';
+function apply(){var n=0;cards.forEach(function(c){var show=cur==='all'||c.getAttribute('data-ind')===cur;
+c.style.display=show?'':'none';if(show)n++;});count.textContent='Menampilkan '+n+' klien';empty.classList.toggle('show',n===0);}
+inds.addEventListener('click',function(e){var b=e.target.closest('.ind');if(!b)return;
+inds.querySelectorAll('.ind').forEach(function(x){x.classList.remove('active');});b.classList.add('active');cur=b.getAttribute('data-ind');apply();});
+apply();
+var FAM=['CLEVPAC','CLEVACH','CLEVAL','CLEVDEC','CLEVFLOC','CLEVBAC','CLEVPRO'];
+function chip(prod){var up=prod.toUpperCase();
+for(var i=0;i<FAM.length;i++){var f=FAM[i];if(up.indexOf(f)===0){var g=prod.slice(f.length).trim();
+if(g)return '<a class="pc" href="grade.html?p='+f+'&g='+encodeURIComponent(g)+'">'+prod+'</a>';}}
+return '<span class="pc">'+prod+'</span>';}
+var modal=document.getElementById('modal'),mname=document.getElementById('m-name'),
+mdesc=document.getElementById('m-desc'),mprods=document.getElementById('m-prods');
+function open(c){mname.textContent=c.getAttribute('data-name');mdesc.textContent=c.getAttribute('data-desc');
+var ps=c.getAttribute('data-prods').split('|');mprods.innerHTML=ps.map(chip).join('');
+modal.classList.add('open');document.body.style.overflow='hidden';}
+function shut(){modal.classList.remove('open');document.body.style.overflow='';}
+cards.forEach(function(c){c.addEventListener('click',function(){open(c);});});
+document.getElementById('mx').addEventListener('click',shut);
+document.getElementById('mbg').addEventListener('click',shut);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')shut();});
+})();
+</script></body></html>
